@@ -1,0 +1,222 @@
+// ====================
+//      COLORS
+// ==============================
+$c_pink: #DC9E82
+$c_yellow: #F4D35E
+$c_green: #28AFB0
+
+$c_blue_01: #151E3F
+$c_blue_02: #030027
+
+$c_black: #333
+$c_white: #DDD
+
+// ====================
+//      MIXIN
+// ==============================
+= center_position
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+= center_flex($j: center, $a: center)
+  display: flex
+  justify-content: $j
+  align-items: $a
+  
+= size($w, $h: $w, $bdrs: 0)
+  width: $w
+  height: $h
+  border-radius: $bdrs
+
+// ====================
+//      DEBUG
+// ==============================
+*
+  // border: 1px solid #000
+  
+// ====================
+//      ALL
+// ==============================
+*
+  font-family: 'Ubuntu', Noto Sans TC
+  position: relative
+html, body
+  +size(100%)
+  margin: 0
+  padding: 0
+body
+  background: linear-gradient(120deg, #222, #444)
+.row, .col-sm-12, .col-sm-6, h1, h2, h3, h4, h5, h6, hr, p, ul, li, label, span
+  margin: 0
+  padding: 0
+  list-style: none
+
+// ====================
+//      BODY
+// ==============================
+.container
+  +size(100%)
+  +center_flex
+  flex-direction: column
+  h1
+    font-size: 30px
+    font-weight: 500
+    color: $c_white
+  .score_panel
+    width: 70vw
+    max-width: 500px
+    +center_flex(space-around)
+    flex-wrap: wrap
+    .moves, .minutes, .seconds
+      padding: 0 10px
+      font-size: 15px
+      color: $c_white
+    .moves, .timer
+      margin: 20px 0
+      padding: 2px 15px
+      border: 1px solid $c_white
+      border-radius: 5px
+      +center_flex
+    .btn_restart
+      margin: 20px 0
+      padding: 5px 15px
+      border: 1px solid $c_white
+      border-radius: 5px
+      +center_flex
+      cursor: pointer
+      transition: 0.5s
+      &:hover
+        border: 1px solid $c_blue_02
+        background-color: $c_blue_02
+        box-shadow: 0 10px 20px rgba(black, 0.4)
+      i
+        padding: 0 10px 0 0
+        font-size: 17px
+        color: $c_white
+        transition: 0.5s
+      h2
+        font-size: 15px
+        color: $c_white
+        transition: 0.5s
+  .deck
+    +size(70vw, 70vw, 10px)
+    max-width: 500px
+    max-height: 500px
+    padding: 30px
+    background-image: linear-gradient(150deg, #DDD, #FFF)
+    +center_flex(space-around)
+    flex-wrap: wrap
+    box-shadow: 0 20px 30px rgba(black, 0.6)
+    .card
+      +size(12vw, 12vw, 10px)
+      max-width: 90px
+      max-height: 90px
+      margin: 2px
+      background-color: $c_blue_01
+      font-size: 0px
+      color: $c_white
+      +center_flex
+      box-shadow: 0 10px 20px rgba(black, 0.4)
+      cursor: pointer
+      transition: 0.3s
+      &:hover
+        opacity: 0.7
+      &.open
+        background-color: $c_yellow
+        font-size: 2em
+        color: $c_blue_01
+        animation-name: flipping
+        animation-duration: 0.5s
+      &.match
+        background-color: $c_green
+        font-size: 2em
+        color: $c_blue_01
+        animation-name: squeezing
+        backface-visibility: visible
+        animation-duration: 0.5s
+      &.not_match
+        background-color: $c_pink
+        font-size: 2em
+        color: $c_blue_01
+        animation-name: pulsing
+        animation-duration: 0.5s
+      &.disabled
+        opacity: 0.9
+        pointer-events: none
+  .modal
+    +size(80%, 80%, 10px)
+    background-image: linear-gradient(120deg, #DDD, #FFF)
+    +center_position
+    z-index: 1
+    display: none
+    .modal_content
+      +size(80%)
+      +center_position
+      +center_flex
+      flex-direction: column
+      .message
+        font-size: 30px
+        font-weight: 500
+      h2
+        padding: 10px 0
+        font-size: 15px
+        color: $c_black
+      .btn_restart
+        margin: 20px 0 0 0
+        padding: 10px 20px
+        border: 1px solid $c_blue_02
+        border-radius: 5px
+        background-color: $c_blue_02
+        font-size: 15px
+        color: $c_white
+        cursor: pointer
+        transition: 0.5s
+        &:hover
+          border: 1px solid $c_blue_02
+          background-color: transparent
+          color: $c_blue_02
+        
+// ====================
+//      KEYFRAMES
+// ==============================
+@keyframes flipping
+  0%
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg)
+    opacity: 0
+    animation-timing-function: ease-in
+  40%
+    transform: perspective(400px) rotate3d(0, 1, 0, -20deg)
+    animation-timing-function: ease-in
+  60%
+    transform: perspective(400px) rotate3d(0, 1, 0, 10deg)
+    opacity: 1
+  80%
+    transform: perspective(400px) rotate3d(0, 1, 0, -5deg)
+  100%
+    transform: perspective(400px)
+
+@keyframes squeezing
+  0%
+    transform: scale3d(1, 1, 1)
+  30%
+    transform: scale3d(1.25, 0.75, 1)
+  40%
+    transform: scale3d(0.75, 1.25, 1)
+  50%
+    transform: scale3d(1.15, 0.85, 1)
+  65%
+    transform: scale3d(0.95, 1.05, 1)
+  75%
+    transform: scale3d(1.05, 0.95, 1)
+  100%
+    transform: scale3d(1, 1, 1)
+
+@keyframes pulsing
+  0%
+    transform: scale3d(1, 1, 1)
+  50%
+    transform: scale3d(1.2, 1.2, 1.2)
+  100%
+    transform: scale3d(1, 1, 1)

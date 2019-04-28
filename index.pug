@@ -1,0 +1,17 @@
+.container
+  h1 記憶遊戲
+  .score_panel
+    .moves 0 步
+    .timer
+      .minutes 0 分
+      .seconds 0 秒
+    .btn_restart(onclick="game_rule.startGame()")
+      i.fas.fa-redo-alt
+      h2 重新開始
+  .deck
+  .modal
+    .modal_content
+      .message 遊戲結束
+      h2.time_taken
+      h2.moves_taken
+      .btn_restart(onclick="game_rule.startGame()") 再玩一次
